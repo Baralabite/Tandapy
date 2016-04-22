@@ -23,38 +23,31 @@ SOFTWARE.
 """
 
 import json
-from Tandapy.util.requester import Requester
-from Tandapy.user.user import User
+import requests
 
-class UserList(Requester):
+class Requester:
     def __init__(self, token):
-        Requester.__init__(self, token)
+        self.token = token
 
-        self.users = {}
-        self.fetchUsers()
+        self.base_url = "https://my.tanda.co/api/v2/"
+        self.auth = 'Bearer ' + self.token.getToken()
 
-    def fetchUsers(self, wages=False):
-        request = "users?show_wages=true" if wages else "users"
-        data = self.get(request)
+    def get(self, extension):
+        headers = {'Cache-Control': 'no-cache', 'Authorization': self.auth}
+        request = requests.get(self.base_url + extension, headers=headers)
+        data = json.loads(request.content.decode('utf-8'))
+        return data
 
-        for userData in data:
-            self.users[userData['id']] = User(userData)
+    def post(self, extension, params):
+        headers = {'Content-Type': 'application/json', 'Authorization': self.auth}
+        requests.post(self.base_url + extension, params=params, headers=headers)
 
-    def deleteUser(self, id):
-        self.delete("users/{}".format(id))
-        del self.users[id]
+    def put(self, extension, params):
+        headers = {'Content-Type': 'application/json', 'Authorization': self.auth}
+        requests.put(self.base_url + extension, params=params, headers=headers)
 
-    def getUser(self, id):
-        return self.users[id]
+    def delete(self, extension):
+        headers = {'Content-Type': 'application/json', 'Authorization': self.auth}
+        requests.delete(self.base_url + extension, headers=headers)
 
-    def getUserName(self, id):
-        return self.users[id].name
 
-    def getUserID(self, name):
-        for user in self.users.values():
-            if user.name == name:
-                return user.id
-
-    def getMe(self):
-        data = self.get("users/me")
-        return self.users[data['id']]
