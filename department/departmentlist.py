@@ -28,6 +28,4 @@ from Tandapy.department.department import Department
 class DepartmentList(NodeList):
     def __init__(self, token):
         NodeList.__init__(self, token)
-
-    def fetchDepartments(self):
-        self.fetchList(request="departments", childClass=Department)
+        self.fetch(request="departments", childClass=Department)
