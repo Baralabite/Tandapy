@@ -24,6 +24,6 @@ SOFTWARE.
 
 from Tandapy.util.Node import Node
 
-class User(Node):
+class Department(Node):
     def __init__(self, nodeData):
         Node.__init__(self, nodeData)

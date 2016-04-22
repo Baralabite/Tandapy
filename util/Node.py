@@ -22,8 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from Tandapy.util.Node import Node
-
-class User(Node):
+class Node:
     def __init__(self, nodeData):
-        Node.__init__(self, nodeData)
+        self.nodeData = nodeData
+
+        for entryID in self.nodeData:
+            entry = self.nodeData[entryID]
+            self.__dict__[entryID] = entry

@@ -22,8 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from Tandapy.util.Node import Node
+from Tandapy.util.NodeList import NodeList
+from Tandapy.department.department import Department
 
-class User(Node):
-    def __init__(self, nodeData):
-        Node.__init__(self, nodeData)
+class DepartmentList(NodeList):
+    def __init__(self, token):
+        NodeList.__init__(self, token)
+
+    def fetchDepartments(self):
+        self.fetchList(request="departments", childClass=Department)

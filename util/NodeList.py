@@ -22,8 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+from Tandapy.util.requester import Requester
 from Tandapy.util.Node import Node
 
-class User(Node):
-    def __init__(self, nodeData):
-        Node.__init__(self, nodeData)
+class NodeList(Requester):
+    def __init__(self, token):
+        Requester.__init__(self, token)
+        self.entries = {}
+
+    def fetchList(self, request="users", childClass=Node):
+        data = self.get(request)
+        for entry in data:
+            self.entries[data['id']] = Node(entry)
