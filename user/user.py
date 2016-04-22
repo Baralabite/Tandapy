@@ -22,24 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from Tandapy.auth.token import Token
-from Tandapy.user.userlist import UserList
-import Tandapy.credentials as creds
+class User:
+    def __init__(self, userData):
+        self.userData = userData
 
-class Tanda:
-    def __init__(self):
-        pass
-
-    def authenticate(self, token):
-        """
-        This function is a quick fix for the hackathon. Provide a token gained by following these instructions:
-        https://docs.google.com/document/d/1-P9DbnG7iCupIToRaaOwUQ01IBUf_qltVrYmoan9Gh8/edit#
-        :param token: Auth token
-        """
-        self.token = Token(token=token)
-
-    def getUsers(self):
-        """
-        :return: List of User objects
-        """
-        return UserList(self.token)
+        for entryID in self.userData:
+            entry = self.userData[entryID]
+            self.__dict__[entryID] = entry

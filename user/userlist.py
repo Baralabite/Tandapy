@@ -22,24 +22,41 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from Tandapy.auth.token import Token
-from Tandapy.user.userlist import UserList
-import Tandapy.credentials as creds
+import json
+import Tandapy.util.requests as requests
+from Tandapy.user.user import User
 
-class Tanda:
-    def __init__(self):
-        pass
+class UserList:
+    def __init__(self, token):
+        self.token = token
 
-    def authenticate(self, token):
-        """
-        This function is a quick fix for the hackathon. Provide a token gained by following these instructions:
-        https://docs.google.com/document/d/1-P9DbnG7iCupIToRaaOwUQ01IBUf_qltVrYmoan9Gh8/edit#
-        :param token: Auth token
-        """
-        self.token = Token(token=token)
+        self.users = {}
+        self.fetchUsers()
 
-    def getUsers(self):
-        """
-        :return: List of User objects
-        """
-        return UserList(self.token)
+    def fetchUsers(self, wages=False):
+        request = "users?show_wages=true" if wages else "users"
+        data = requests.get(request, self.token)
+        data = json.loads(data.content.decode('utf-8'))
+
+        for userData in data:
+            self.users[userData['id']] = User(userData)
+
+    def deleteUser(self, id):
+        requests.delete("users/{}".format(id), self.token)
+        del self.users[id]
+
+    def getUser(self, id):
+        return self.users[id]
+
+    def getUserName(self, id):
+        return self.users[id].name
+
+    def getUserID(self, name):
+        for user in self.users.values():
+            if user.name == name:
+                return user.id
+
+    def getMe(self):
+        data = requests.get("users/me", self.token)
+        data = json.loads(data.content.decode('utf-8'))
+        return self.users[data['id']]

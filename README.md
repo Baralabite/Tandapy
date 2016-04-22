@@ -1,9 +1,20 @@
 Python Library for accessing v2 of the Tanda API.
 
-Please be aware of the MIT license on this code.
+Ensure to create your own credentials file in the home directory before running any test code:
+
+(Tandapy/credentials.py)
+USERNAME = "YOUR USERNAME"
+PASSWORD = "YOUR PASSWORD"
+TOKEN = 'YOUR TOKEN'
+
+Tandapy should be installed under:
+
+%PYTHONPATH%/Lib/site-packages/Tandapy
 
 Inspired by the official python code examples at:
 https://github.com/TandaHQ/api-v2-code-samples/tree/master/python
+
+=======================================================================
 
 The MIT License (MIT)
 

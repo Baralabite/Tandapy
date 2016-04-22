@@ -22,10 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 import json
-import requests
+
+
+#TODO Very messy - can use username/password auth, although for the hackathon a token should be used
+
 
 class Token:
-    def __init__(self, username, password, scope='me'):
+    def __init__(self, username='', password='', scope='me', token=''):
         """
 
         :param username: Tanda username
@@ -33,11 +36,20 @@ class Token:
         :param scope: https://my.tanda.co/api/v2/documentation#header-scopes
         :return:
         """
-        self.username = username
-        self.password = password
-        self.scope = scope
+        if username != '' and password != '':
+            self.username = username
+            self.password = password
+            self.scope = scope
 
-        self.authenticateToken()
+            self.authenticateToken()
+        elif token != '':
+            self.tokenString = token
+
+        self.getTokenType = ''
+        self.createdAt = 0
+        self.scope = ''
+        self.username = ''
+        self.password = ''
 
     def getToken(self):
         return self.tokenString
