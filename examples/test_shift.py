@@ -22,24 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from Tandapy.util.requester import Requester
-from Tandapy.util.Node import Node
+from Tandapy.tanda import Tanda
+from Tandapy.credentials import TOKEN
 
-class NodeList(Requester):
-    def __init__(self, token):
-        Requester.__init__(self, token)
-        self.entries = {}
+tanda = Tanda()
+tanda.authenticate(TOKEN)
 
-    def fetch(self, request="users", childClass=Node, data=None):
-        if not data:
-            data = self.get(request)
+objectList = tanda.getShift()
+objectIDs = objectList.getIDs()
+object = objectList.getEntry(objectIDs[0])
 
-        for entry in data:
-            url = request + "/{}".format(entry["id"])
-            self.entries[entry["id"]] = childClass(url, nodeData=entry)
-
-    def getEntry(self, id):
-        return self.entries[id]
-
-    def getIDs(self):
-        return list(self.entries.keys())
+print([entry for entry in dir(object) if not entry.startswith("_")])

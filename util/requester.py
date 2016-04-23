@@ -28,26 +28,24 @@ import requests
 class Requester:
     def __init__(self, token):
         self.token = token
+        self.url = None             #Overwritten by subclasses
 
         self.base_url = "https://my.tanda.co/api/v2/"
         self.auth = 'Bearer ' + self.token.getToken()
+        self.headers = {'Cache-Control': 'no-cache', 'Content-Type': 'application/json', 'Authorization': self.auth}
 
     def get(self, extension):
-        headers = {'Cache-Control': 'no-cache', 'Authorization': self.auth}
-        request = requests.get(self.base_url + extension, headers=headers)
+        request = requests.get(self.base_url + extension, headers=self.headers)
         data = json.loads(request.content.decode('utf-8'))
         return data
 
     def post(self, extension, params):
-        headers = {'Content-Type': 'application/json', 'Authorization': self.auth}
-        requests.post(self.base_url + extension, params=params, headers=headers)
+        requests.post(self.base_url + self.url, params=params, headers=self.headers)
 
-    def put(self, extension, params):
-        headers = {'Content-Type': 'application/json', 'Authorization': self.auth}
-        requests.put(self.base_url + extension, params=params, headers=headers)
+    def put(self, params):
+        requests.put(self.base_url + self.url, params=params, headers=self.headers)
 
-    def delete(self, extension):
-        headers = {'Content-Type': 'application/json', 'Authorization': self.auth}
-        requests.delete(self.base_url + extension, headers=headers)
+    def delete(self):
+        requests.delete(self.base_url + self.url, headers=self.headers)
 
 

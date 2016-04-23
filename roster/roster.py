@@ -28,14 +28,16 @@ from Tandapy.schedule.schedulelist import ScheduleList
 import pprint
 
 class Roster(Requester):
-    def __init__(self, token, on=None, current=False, show_costs=False):
+    def __init__(self, token, id=None, on=None, current=False, show_costs=False):
         Requester.__init__(self, token)
         self.roster = {}
 
         if current:
             request = "rosters/current"
         elif on:
-            request = "rostersr/on/{}".format(on)
+            request = "rosters/on/{}".format(on)
+        elif id:
+            request = "roster/{}".format(id)
 
         if show_costs:
             request += "&show_costs=true"

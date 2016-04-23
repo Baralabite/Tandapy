@@ -28,8 +28,8 @@ from Tandapy.credentials import TOKEN
 tanda = Tanda()
 tanda.authenticate(TOKEN)
 
-departments = tanda.getSchedule()
-departmentIDs = departments.getIDs()
-department = departments.getEntry(departmentIDs[0])
+objectList = tanda.getSchedule()
+objectIDs = objectList.getIDs()
+object = objectList.getEntry(objectIDs[0])
 
-print(dir(department))
+print([entry for entry in dir(object) if not entry.startswith("_")])

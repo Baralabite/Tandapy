@@ -29,6 +29,8 @@ from Tandapy.department.departmentlist import DepartmentList
 from Tandapy.schedule.schedulelist import ScheduleList
 from Tandapy.role.rolelist import RoleList
 from Tandapy.leave.leavelist import LeaveList
+from Tandapy.shift.shiftlist import ShiftList
+from Tandapy.award.awardlist import AwardList
 
 from Tandapy.roster.roster import Roster
 
@@ -47,6 +49,17 @@ class Tanda:
         """
         self.token = Token(token=token)
 
+
+    def getCurrentRoster(self):
+        return Roster(self.token, current=True)
+
+    def getRosterOn(self, date):
+        return Roster(self.token, on=date)
+
+    def getRoster(self, id):
+        return Roster(self.toke, id=id)
+
+
     def getUsers(self):
         """
         :return: List of User objects
@@ -57,22 +70,17 @@ class Tanda:
         return DepartmentList(self.token)
 
 
-
-    def getCurrentRoster(self):
-        return Roster(self.token, current=True)
-
-    def getRosterOn(self, date):
-        return Roster(self.token, on=date)
-
-    def 
-
-
-
     def getSchedule(self):
         return ScheduleList(self.token)
 
     def getRole(self):
         return RoleList(self.token)
 
+    def getShift(self):
+        return ShiftList(self.token)
+
     def getLeave(self):
         return LeaveList(self.token)
+
+    def getAward(self):
+        return AwardList(self.token)

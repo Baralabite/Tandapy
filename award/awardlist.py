@@ -22,24 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from Tandapy.util.requester import Requester
-from Tandapy.util.Node import Node
+from Tandapy.util.NodeList import NodeList
+from Tandapy.award.award import Award
 
-class NodeList(Requester):
+class AwardList(NodeList):
     def __init__(self, token):
-        Requester.__init__(self, token)
-        self.entries = {}
-
-    def fetch(self, request="users", childClass=Node, data=None):
-        if not data:
-            data = self.get(request)
-
-        for entry in data:
-            url = request + "/{}".format(entry["id"])
-            self.entries[entry["id"]] = childClass(url, nodeData=entry)
-
-    def getEntry(self, id):
-        return self.entries[id]
-
-    def getIDs(self):
-        return list(self.entries.keys())
+        NodeList.__init__(self, token)
+        request = "award_tags"
+        self.fetch(request=request, childClass=Award)

@@ -25,5 +25,5 @@ SOFTWARE.
 from Tandapy.util.Node import Node
 
 class Schedule(Node):
-    def __init__(self, nodeData):
-        Node.__init__(self, nodeData)
+    def __init__(self, url, token=None, nodeData=None):
+        Node.__init__(self, url, token=token, nodeData=nodeData)
