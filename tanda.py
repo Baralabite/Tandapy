@@ -38,8 +38,8 @@ from Tandapy.roster.roster import Roster
 
 
 class Tanda:
-    def __init__(self):
-        pass
+    def __init__(self, token):
+        self.authenticate(token)
 
     def authenticate(self, token):
         """
