@@ -22,23 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from Tandapy.util.NodeList import NodeList
-from Tandapy.unavailability.unavailability import Unavailability
+from Tandapy.util.Node import Node
 
-class UnavailabilityList(NodeList):
-    def __init__(self, token, fromDate='', toDate='', ids=[], user_ids=[]):
-        NodeList.__init__(self, token)
-
-        request = "unavailability?"
-
-        if not fromDate == '' and not toDate == '':
-            request += "from={}&to={}".format(fromDate, toDate)
-
-        if not id == []:
-            request += "&ids={}".format(",".join(ids))
-
-        user_ids = [str(id) for id in user_ids]
-        if not user_ids == []:
-            request += "&user_ids={}".format(",".join(user_ids))
-
-        self.fetch(request=request, childClass=Unavailability)
+class Device(Node):
+    def __init__(self, url, token=None, nodeData=None):
+        Node.__init__(self, url, token=token, nodeData=None)

@@ -22,23 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from Tandapy.util.NodeList import NodeList
-from Tandapy.unavailability.unavailability import Unavailability
+from Tandapy.tanda import Tanda
+from Tandapy.credentials import TOKEN
 
-class UnavailabilityList(NodeList):
-    def __init__(self, token, fromDate='', toDate='', ids=[], user_ids=[]):
-        NodeList.__init__(self, token)
+tanda = Tanda()
+tanda.authenticate(TOKEN)
 
-        request = "unavailability?"
+objectList = tanda.getDevice()
+objectIDs = objectList.getIDs()
+object = objectList.getEntry(objectIDs[0])
 
-        if not fromDate == '' and not toDate == '':
-            request += "from={}&to={}".format(fromDate, toDate)
-
-        if not id == []:
-            request += "&ids={}".format(",".join(ids))
-
-        user_ids = [str(id) for id in user_ids]
-        if not user_ids == []:
-            request += "&user_ids={}".format(",".join(user_ids))
-
-        self.fetch(request=request, childClass=Unavailability)
+print([entry for entry in dir(object) if not entry.startswith("_")])

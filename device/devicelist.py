@@ -23,22 +23,10 @@ SOFTWARE.
 """
 
 from Tandapy.util.NodeList import NodeList
-from Tandapy.unavailability.unavailability import Unavailability
+from Tandapy.device.device import Device
 
-class UnavailabilityList(NodeList):
-    def __init__(self, token, fromDate='', toDate='', ids=[], user_ids=[]):
+class DeviceList(NodeList):
+    def __init__(self, token):
         NodeList.__init__(self, token)
-
-        request = "unavailability?"
-
-        if not fromDate == '' and not toDate == '':
-            request += "from={}&to={}".format(fromDate, toDate)
-
-        if not id == []:
-            request += "&ids={}".format(",".join(ids))
-
-        user_ids = [str(id) for id in user_ids]
-        if not user_ids == []:
-            request += "&user_ids={}".format(",".join(user_ids))
-
-        self.fetch(request=request, childClass=Unavailability)
+        request = "devices"
+        self.fetch(request=request, childClass=Device)

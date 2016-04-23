@@ -28,7 +28,7 @@ from Tandapy.credentials import TOKEN
 tanda = Tanda()
 tanda.authenticate(TOKEN)
 
-objectList = tanda.getUnavailability()
+objectList = tanda.getUnavailability(user_ids=[125093])
 objectIDs = objectList.getIDs()
 object = objectList.getEntry(objectIDs[0])
 

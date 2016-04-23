@@ -31,12 +31,12 @@ class NodeList(Requester):
         self.entries = {}
 
     def fetch(self, request="users", childClass=Node, data=None):
-        if not data:
+        if data == None:
             data = self.get(request)
 
         for entry in data:
             url = request + "/{}".format(entry["id"])
-            self.entries[entry["id"]] = childClass(url, nodeData=entry)
+            self.entries[entry["id"]] = childClass(url, nodeData=entry, token=self.token)
 
     def getEntry(self, id):
         return self.entries[id]

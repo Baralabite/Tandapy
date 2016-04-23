@@ -32,6 +32,7 @@ from Tandapy.leave.leavelist import LeaveList
 from Tandapy.shift.shiftlist import ShiftList
 from Tandapy.award.awardlist import AwardList
 from Tandapy.unavailability.unavailabilitylist import UnavailabilityList
+from Tandapy.device.devicelist import DeviceList
 
 from Tandapy.roster.roster import Roster
 
@@ -84,5 +85,8 @@ class Tanda:
     def getAward(self):
         return AwardList(self.token)
 
-    def getUnavailability(self):
-        return UnavailabilityList(self.token, fromDate='2016-03-15', toDate='2016-04-05')
+    def getUnavailability(self, user_ids=[]):
+        return UnavailabilityList(self.token, user_ids=user_ids)
+
+    def getDevice(self):
+        return DeviceList(self.token)
