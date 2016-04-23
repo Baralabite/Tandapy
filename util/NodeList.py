@@ -46,3 +46,6 @@ class NodeList(Requester):
 
     def getEntries(self):
         return [self.getEntry(i) for i in self.getIDs()]
+
+    def __iter__(self):
+        return self.getEntries().__iter__()
