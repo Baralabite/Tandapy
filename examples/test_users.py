@@ -32,6 +32,4 @@ objectList = tanda.getUsers()
 objectIDs = objectList.getIDs()
 object = objectList.getEntry(objectIDs[0])
 
-print([entry for entry in dir(object) if not entry.startswith("_")])
-print(object.id)
-print(object.name)
+print(objectIDs)

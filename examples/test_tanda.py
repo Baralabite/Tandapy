@@ -29,4 +29,3 @@ tanda = Tanda()
 tanda.authenticate(TOKEN)
 
 user = tanda.getUsers()
-print(user.getMe().name)
