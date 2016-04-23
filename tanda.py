@@ -31,10 +31,9 @@ from Tandapy.role.rolelist import RoleList
 from Tandapy.leave.leavelist import LeaveList
 from Tandapy.shift.shiftlist import ShiftList
 from Tandapy.award.awardlist import AwardList
+from Tandapy.unavailability.unavailabilitylist import UnavailabilityList
 
 from Tandapy.roster.roster import Roster
-
-import Tandapy.credentials as creds
 
 
 class Tanda:
@@ -84,3 +83,6 @@ class Tanda:
 
     def getAward(self):
         return AwardList(self.token)
+
+    def getUnavailability(self):
+        return UnavailabilityList(self.token, fromDate='2016-03-15', toDate='2016-04-05')

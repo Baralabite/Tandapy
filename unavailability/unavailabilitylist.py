@@ -22,40 +22,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import json
-from Tandapy.util.requester import Requester
-from Tandapy.user.user import User
+from Tandapy.util.NodeList import NodeList
+from Tandapy.unavailability.unavailability import Unavailability
 
-class UserList(Requester):
-    def __init__(self, token):
-        Requester.__init__(self, token)
+class UnavailabilityList(NodeList):
+    def __init__(self, token, fromDate='', toDate='', ids=[], user_ids=[]):
+        NodeList.__init__(self, token)
 
-        self.users = {}
-        self.fetchUsers()
+        request = "unavailability?"
 
-    def fetchUsers(self, wages=False):
-        request = "users?show_wages=true" if wages else "users"
-        data = self.get(request)
-        print(data)
+        if not fromDate == '' and not toDate == '':
+            request += "from={}&to={}".format(fromDate, toDate)
 
-        for userData in data:
-            self.users[userData['id']] = User(userData)
+        if not id == []:
+            request += "&ids={}".format(",".join(ids))
 
-    def deleteUser(self, id):
-        self.delete("users/{}".format(id))
-        del self.users[id]
+        if not user_ids == []:
+            request += "&user_ids={}".format(",".join(user_ids))
 
-    def getUser(self, id):
-        return self.users[id]
-
-    def getUserName(self, id):
-        return self.users[id].name
-
-    def getUserID(self, name):
-        for user in self.users.values():
-            if user.name == name:
-                return user.id
-
-    def getMe(self):
-        data = self.get("users/me")
-        return self.users[data['id']]
+        self.fetch(request=request, childClass=Unavailability)
