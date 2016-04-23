@@ -29,7 +29,15 @@ tanda = Tanda()
 tanda.authenticate(TOKEN)
 
 objectList = tanda.getUsers()
+
+# for i in objectList.getEntries():
+# 	print(i)
+
+for i in objectList:
+	print(i)
+
 objectIDs = objectList.getIDs()
 object = objectList.getEntry(objectIDs[0])
 
-print(objectIDs)
+
+# print(objectIDs)
