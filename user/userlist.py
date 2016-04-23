@@ -23,39 +23,11 @@ SOFTWARE.
 """
 
 import json
-from Tandapy.util.requester import Requester
 from Tandapy.user.user import User
+from Tandapy.util.NodeList import NodeList
 
-class UserList(Requester):
+class UserList(NodeList):
     def __init__(self, token):
-        Requester.__init__(self, token)
-
-        self.users = {}
-        self.fetchUsers()
-
-    def fetchUsers(self, wages=False):
-        request = "users?show_wages=true" if wages else "users"
-        data = self.get(request)
-        print(data)
-
-        for userData in data:
-            self.users[userData['id']] = User(userData)
-
-    def deleteUser(self, id):
-        self.delete("users/{}".format(id))
-        del self.users[id]
-
-    def getUser(self, id):
-        return self.users[id]
-
-    def getUserName(self, id):
-        return self.users[id].name
-
-    def getUserID(self, name):
-        for user in self.users.values():
-            if user.name == name:
-                return user.id
-
-    def getMe(self):
-        data = self.get("users/me")
-        return self.users[data['id']]
+        NodeList.__init__(self, token)
+        request = "users"
+        self.fetch(request=request, childClass=User)
