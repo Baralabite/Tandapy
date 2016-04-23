@@ -30,8 +30,13 @@ class NodeList(Requester):
         Requester.__init__(self, token)
         self.entries = {}
 
-    def fetch(self, request="users", childClass=Node):
-        data = self.get(request)
+    def getRequest(self, request):
+        return request
+
+    def fetch(self, request="users", childClass=Node, data=None):
+        if not data:
+            data = self.get(request)
+
         for entry in data:
             self.entries[entry['id']] = childClass(entry)
 

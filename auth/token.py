@@ -92,4 +92,4 @@ class Token:
         self.createdAt = int(unpackedData.get('created_at'))
 
     def __str__(self):
-        return "<" + self.getTokenType() + " token (" + self.getToken() + ") created at " + str(self.createdAt) + ">"
+        return "<" + self.getTokenType() + " token (" + self.getToken() + ")>"

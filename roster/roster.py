@@ -22,11 +22,34 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from Tandapy.util.NodeList import NodeList
-from Tandapy.department.department import Department
+from Tandapy.util.requester import Requester
+from Tandapy.schedule.schedule import Schedule
+from Tandapy.schedule.schedulelist import ScheduleList
+import pprint
 
-class DepartmentList(NodeList):
-    def __init__(self, token):
-        NodeList.__init__(self, token)
-        request = self.getRequest('departments')
-        self.fetch(request=request, childClass=Department)
+class Roster(Requester):
+    def __init__(self, token, on=None, current=False, show_costs=False):
+        Requester.__init__(self, token)
+        self.roster = {}
+
+        if current:
+            request = "rosters/current"
+        elif on:
+            request = "rostersr/on/{}".format(on)
+
+        if show_costs:
+            request += "&show_costs=true"
+
+        data = self.get(request)
+
+        for day in data["schedules"]:
+            date = day["date"]
+            schedules = day["schedules"]
+            self.roster[date] = ScheduleList(token, scheduleListData=schedules)
+
+    def getScheduleOnDate(self, date):
+        return self.roster[date]
+
+    def getWeekDates(self):
+        return list(self.roster.keys())
+

@@ -23,9 +23,17 @@ SOFTWARE.
 """
 
 from Tandapy.auth.token import Token
+
 from Tandapy.user.userlist import UserList
 from Tandapy.department.departmentlist import DepartmentList
+from Tandapy.schedule.schedulelist import ScheduleList
+from Tandapy.role.rolelist import RoleList
+from Tandapy.leave.leavelist import LeaveList
+
+from Tandapy.roster.roster import Roster
+
 import Tandapy.credentials as creds
+
 
 class Tanda:
     def __init__(self):
@@ -47,3 +55,24 @@ class Tanda:
 
     def getDepartments(self):
         return DepartmentList(self.token)
+
+
+
+    def getCurrentRoster(self):
+        return Roster(self.token, current=True)
+
+    def getRosterOn(self, date):
+        return Roster(self.token, on=date)
+
+    def 
+
+
+
+    def getSchedule(self):
+        return ScheduleList(self.token)
+
+    def getRole(self):
+        return RoleList(self.token)
+
+    def getLeave(self):
+        return LeaveList(self.token)

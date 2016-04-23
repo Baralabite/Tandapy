@@ -23,10 +23,9 @@ SOFTWARE.
 """
 
 from Tandapy.util.NodeList import NodeList
-from Tandapy.department.department import Department
+from Tandapy.role.role import Role
 
-class DepartmentList(NodeList):
+class RoleList(NodeList):
     def __init__(self, token):
         NodeList.__init__(self, token)
-        request = self.getRequest('departments')
-        self.fetch(request=request, childClass=Department)
+        self.fetch(request="roles", childClass=Role)

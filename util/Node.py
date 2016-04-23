@@ -24,8 +24,6 @@ SOFTWARE.
 
 class Node:
     def __init__(self, nodeData):
-        self.nodeData = nodeData
-
-        for entryID in self.nodeData:
-            entry = self.nodeData[entryID]
+        for entryID in nodeData:
+            entry = nodeData[entryID]
             self.__dict__[entryID] = entry

@@ -23,10 +23,22 @@ SOFTWARE.
 """
 
 from Tandapy.util.NodeList import NodeList
-from Tandapy.department.department import Department
+from Tandapy.schedule.schedule import Schedule
 
-class DepartmentList(NodeList):
-    def __init__(self, token):
+class ScheduleList(NodeList):
+    def __init__(self, token, ids=[], show_costs=False, scheduleListData=None):
         NodeList.__init__(self, token)
-        request = self.getRequest('departments')
-        self.fetch(request=request, childClass=Department)
+
+        if scheduleListData:
+            self.fetch(data=scheduleListData, childClass=Schedule)
+            return
+
+        request = "schedules"
+
+        if not ids==[]:
+            request += "&ids={}".format(",".join(ids))
+
+        if show_costs:
+            request += "&show_costs=true"
+
+        self.fetch(request=request, childClass=Schedule)

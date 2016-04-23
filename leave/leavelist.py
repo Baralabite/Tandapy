@@ -23,10 +23,21 @@ SOFTWARE.
 """
 
 from Tandapy.util.NodeList import NodeList
-from Tandapy.department.department import Department
+from Tandapy.leave.leave import Leave
 
-class DepartmentList(NodeList):
-    def __init__(self, token):
+class LeaveList(NodeList):
+    def __init__(self, token, fromDate='', toDate='', ids=[], user_ids=[]):
         NodeList.__init__(self, token)
-        request = self.getRequest('departments')
-        self.fetch(request=request, childClass=Department)
+
+        request = "leave?"
+
+        if not fromDate == '' and not toDate == '':
+            request += "from={}&to={}".format(fromDate, toDate)
+
+        if not id == []:
+            request += "&ids={}".format(",".join(ids))
+
+        if not user_ids == []:
+            request += "&user_ids={}".format(",".join(user_ids))
+
+        self.fetch(request=request, childClass=Leave)
