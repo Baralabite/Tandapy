@@ -27,7 +27,7 @@ from Tandapy.user.user import User
 from Tandapy.util.NodeList import NodeList
 
 class UserList(NodeList):
-    def __init__(self, token):
-        NodeList.__init__(self, token)
+    def __init__(self):
+        NodeList.__init__(self)
         request = "users"
         self.fetch(request=request, childClass=User)

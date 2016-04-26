@@ -24,20 +24,34 @@ SOFTWARE.
 
 import json
 import requests
+from Tandapy.auth.token import Token
+
+token = ""
 
 class Requester:
-    def __init__(self, token):
-        self.token = token
+    def __init__(self):
         self.url = None             #Overwritten by subclasses
 
         self.base_url = "https://my.tanda.co/api/v2/"
-        self.auth = 'Bearer ' + self.token.getToken()
+        self.auth = 'Bearer ' + self.getToken().getToken()
         self.headers = {'Cache-Control': 'no-cache', 'Content-Type': 'application/json', 'Authorization': self.auth}
+
+    @staticmethod
+    def getToken():
+        return token
+
+    @staticmethod
+    def setToken(newToken):
+        global token
+        token = Token(token=newToken)
 
     def get(self, extension):
         request = requests.get(self.base_url + extension, headers=self.headers)
         data = json.loads(request.content.decode('utf-8'))
         return data
+
+    def getRequestURL(self, extension):
+        return (self.base_url + extension, self.headers)
 
     def post(self, extension, params):
         requests.post(self.base_url + self.url, params=params, headers=self.headers)

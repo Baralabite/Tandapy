@@ -25,9 +25,12 @@ SOFTWARE.
 from Tandapy.util.requester import Requester
 from Tandapy.util.Node import Node
 
+from Tandapy.util.requester import Requester
+from Tandapy.util.Node import Node
+
 class NodeList(Requester):
-    def __init__(self, token):
-        Requester.__init__(self, token)
+    def __init__(self):
+        Requester.__init__(self)
         self.entries = {}
 
     def fetch(self, request="users", childClass=Node, data=None):
@@ -36,10 +39,19 @@ class NodeList(Requester):
 
         for entry in data:
             url = request + "/{}".format(entry["id"])
-            self.entries[entry["id"]] = childClass(url, nodeData=entry, token=self.token)
+            self.entries[entry["id"]] = childClass(entry["id"], data=entry)
 
     def getEntry(self, id):
         return self.entries[id]
 
     def getIDs(self):
         return list(self.entries.keys())
+
+    def getEntries(self):
+        return [self.getEntry(i) for i in self.getIDs()]
+
+    def __iter__(self):
+        return self.getEntries().__iter__()
+
+    def __getitem__(self, item):
+        return self.entries[item]

@@ -34,21 +34,23 @@ from Tandapy.award.awardlist import AwardList
 from Tandapy.unavailability.unavailabilitylist import UnavailabilityList
 from Tandapy.device.devicelist import DeviceList
 
+from Tandapy.util.requester import Requester
+
 from Tandapy.roster.roster import Roster
 
 
+"""
+API Docs can be found here:
+https://my.tanda.co/api/v2/documentation
+"""
+
 class Tanda:
-    def __init__(self, token):
-        self.authenticate(token)
+    def __init__(self, token=None):
+        if token:
+            print("Setting the token")
+            Requester.setToken(token)
 
-    def authenticate(self, token):
-        """
-        This function is a quick fix for the hackathon. Provide a token gained by following these instructions:
-        https://docs.google.com/document/d/1-P9DbnG7iCupIToRaaOwUQ01IBUf_qltVrYmoan9Gh8/edit#
-        :param token: Auth token
-        """
-        self.token = Token(token=token)
-
+        self.objectCache = {}
 
     def getCurrentRoster(self):
         return Roster(self.token, current=True)
@@ -64,7 +66,7 @@ class Tanda:
         """
         :return: List of User objects
         """
-        return UserList(self.token)
+        return UserList()
 
     def getDepartments(self):
         return DepartmentList(self.token)

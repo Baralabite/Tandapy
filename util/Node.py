@@ -25,13 +25,26 @@ SOFTWARE.
 from Tandapy.util.requester import Requester
 
 class Node(Requester):
-    def __init__(self, url, token=None, nodeData=None):
-        self.url = url
+    def __init__(self, id, **kwargs):
+        Requester.__init__(self)
 
-        if token and nodeData==None:
-            Requester.__init__(self, token)
-            nodeData = self.get(url)
+        self.url = self.getResourceURL(id, **kwargs)
 
-        for entryID in nodeData:
-            entry = nodeData[entryID]
+        if self.url and not "data" in kwargs:
+            nodeData = self.get(self.url)
+
+        if "data" in kwargs:
+            nodeData = kwargs["data"]
+
+        self.refreshEntries(data=nodeData)
+
+    def refreshEntries(self, data=None):
+        if not data:
+            data = self.get(self.url)
+
+        for entryID in data:
+            entry = data[entryID]
             self.__dict__[entryID] = entry
+
+    def getResourceURL(self, id, **kwargs):
+        return None

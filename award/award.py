@@ -25,5 +25,5 @@ SOFTWARE.
 from Tandapy.util.Node import Node
 
 class Award(Node):
-    def __init__(self, url, token=None, nodeData=None):
-        Node.__init__(self, url, token=token, nodeData=nodeData)
+    def __init__(self, *args, **kwargs):
+        Node.__init__(self, *args, **kwargs)

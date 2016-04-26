@@ -9,7 +9,6 @@ in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
-
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
@@ -23,7 +22,19 @@ SOFTWARE.
 """
 
 from Tandapy.util.Node import Node
+from Tandapy.department.department import Department
 
 class User(Node):
-    def __init__(self, url, token=None, nodeData=None):
-        Node.__init__(self, url, token=token, nodeData=nodeData)
+    def __init__(self, id, **kwargs):
+        Node.__init__(self, id, **kwargs)
+
+    def getResourceURL(self, id, **kwargs):
+        url = "users/{}".format(id)
+
+        if "show_wages" in kwargs:
+            url += "?show_wages=true"
+
+        return url
+
+    def getDepartments(self):
+        return [Department(departmentID) for departmentID in self.department_ids]

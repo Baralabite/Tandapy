@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 import json
-
+import traceback
 
 #TODO Very messy - can use username/password auth, although for the hackathon a token should be used
 
@@ -42,7 +42,9 @@ class Token:
             self.scope = scope
 
             self.authenticateToken()
+
         elif token != '':
+            print("Setting token in token init")
             self.tokenString = token
 
         self.getTokenType = ''

@@ -25,6 +25,11 @@ SOFTWARE.
 from Tandapy.util.NodeList import NodeList
 from Tandapy.department.department import Department
 
+
+
+
+
+
 class DepartmentList(NodeList):
     def __init__(self, token):
         NodeList.__init__(self, token)
