@@ -31,10 +31,12 @@ class User(Node):
     def getResourceURL(self, id, **kwargs):
         url = "users/{}".format(id)
 
-        if "show_wages" in kwargs:
-            url += "?show_wages=true"
+        if "show_wages" in kwargs and kwargs["show_wages"]:
+            url += "&show_wages=true"
 
         return url
 
     def getDepartments(self):
+        for departmentID in self.department_ids:
+            print(departmentID)
         return [Department(departmentID) for departmentID in self.department_ids]

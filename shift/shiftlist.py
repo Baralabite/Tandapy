@@ -26,6 +26,6 @@ from Tandapy.util.NodeList import NodeList
 from Tandapy.shift.shift import Shift
 
 class ShiftList(NodeList):
-    def __init__(self, token):
-        NodeList.__init__(self, token)
+    def __init__(self):
+        NodeList.__init__(self)
         self.fetch(request="shifts", childClass=Shift)

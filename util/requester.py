@@ -46,9 +46,14 @@ class Requester:
         token = Token(token=newToken)
 
     def get(self, extension):
-        request = requests.get(self.base_url + extension, headers=self.headers)
-        data = json.loads(request.content.decode('utf-8'))
-        return data
+        try:
+            print(self.base_url + extension)
+            request = requests.get(self.base_url + extension, headers=self.headers)
+            print(request.content.decode('utf-8'))
+            data = json.loads(request.content.decode('utf-8'))
+            return data
+        except json.JSONDecodeError:
+            raise Exception("Bad Tanda stuff happened.")
 
     def getRequestURL(self, extension):
         return (self.base_url + extension, self.headers)

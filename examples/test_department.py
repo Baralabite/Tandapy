@@ -25,11 +25,5 @@ SOFTWARE.
 from Tandapy.tanda import Tanda
 from Tandapy.credentials import TOKEN
 
-tanda = Tanda()
-tanda.authenticate(TOKEN)
-
-departments = tanda.getDepartments()
-departmentIDs = departments.getIDs()
-department = departments.getEntry(departmentIDs[0])
-
-print(dir(department))
+for department in Tanda(TOKEN).getDepartments():
+    print(department.name)

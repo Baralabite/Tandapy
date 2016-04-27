@@ -29,5 +29,6 @@ class Department(Node):
         Node.__init__(self, id, **kwargs)
 
     def getResourceURL(self, id, **kwargs):
+        print("Department", id)
         url = "departments/{}".format(id)
         return url

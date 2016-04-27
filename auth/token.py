@@ -44,7 +44,6 @@ class Token:
             self.authenticateToken()
 
         elif token != '':
-            print("Setting token in token init")
             self.tokenString = token
 
         self.getTokenType = ''

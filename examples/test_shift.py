@@ -25,11 +25,7 @@ SOFTWARE.
 from Tandapy.tanda import Tanda
 from Tandapy.credentials import TOKEN
 
-tanda = Tanda()
-tanda.authenticate(TOKEN)
+tanda = Tanda(TOKEN)
 
-objectList = tanda.getShift()
-objectIDs = objectList.getIDs()
-object = objectList.getEntry(objectIDs[0])
-
-print([entry for entry in dir(object) if not entry.startswith("_")])
+for shift in tanda.getShift():
+    print(shift.id)

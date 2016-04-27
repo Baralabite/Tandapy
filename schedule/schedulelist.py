@@ -26,8 +26,8 @@ from Tandapy.util.NodeList import NodeList
 from Tandapy.schedule.schedule import Schedule
 
 class ScheduleList(NodeList):
-    def __init__(self, token, ids=[], show_costs=False, scheduleListData=None):
-        NodeList.__init__(self, token)
+    def __init__(self, ids=[], show_costs=False, scheduleListData=None):
+        NodeList.__init__(self)
 
         if scheduleListData:
             self.fetch(data=scheduleListData, childClass=Schedule)

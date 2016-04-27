@@ -22,12 +22,39 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from Tandapy.util.requester import Requester
+from Tandapy.util.Node import Node
 from Tandapy.schedule.schedule import Schedule
 from Tandapy.schedule.schedulelist import ScheduleList
-import pprint
 
-class Roster(Requester):
+class Roster(Node):
+    def __init__(self, id, **kwargs):
+        Node.__init__(self, id, **kwargs)
+
+    def getResourceURL(self, id, **kwargs):
+        if "on" in kwargs and id==None:
+            url = "rosters/on/{}".format(kwargs["on"])
+        else:
+            url = "rosters/{}".format(id)
+
+        if "show_costs" in kwargs and kwargs["show_costs"]:
+            url += "?show_costs=true"
+
+        return url
+
+    #Overriden from Node
+    def processNodeData(self, data):
+        self.roster = {}
+
+        for day in data["schedules"]:
+            date = day["date"]
+            schedules = day["schedules"]
+            self.roster[date] = ScheduleList(data=schedules)
+
+
+
+
+
+"""class Roster(Requester):
     def __init__(self, token, id=None, on=None, current=False, show_costs=False):
         Requester.__init__(self, token)
         self.roster = {}
@@ -54,4 +81,4 @@ class Roster(Requester):
 
     def getWeekDates(self):
         return list(self.roster.keys())
-
+"""

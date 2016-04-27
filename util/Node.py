@@ -28,7 +28,10 @@ class Node(Requester):
     def __init__(self, id, **kwargs):
         Requester.__init__(self)
 
-        self.url = self.getResourceURL(id, **kwargs)
+        if not "url" in kwargs:
+            self.url = self.getResourceURL(id, **kwargs)
+        else:
+            self.url = kwargs["url"]
 
         if self.url and not "data" in kwargs:
             nodeData = self.get(self.url)
@@ -36,15 +39,21 @@ class Node(Requester):
         if "data" in kwargs:
             nodeData = kwargs["data"]
 
-        self.refreshEntries(data=nodeData)
+        self.processNodeData(nodeData)
 
-    def refreshEntries(self, data=None):
-        if not data:
-            data = self.get(self.url)
-
+    def processNodeData(self, data):
         for entryID in data:
             entry = data[entryID]
             self.__dict__[entryID] = entry
 
+    def refreshEntries(self, data=None):
+        if not data:
+            data = self.get(self.url)
+            self.processNodeData(data)
+
     def getResourceURL(self, id, **kwargs):
         return None
+
+
+    def deleteEntry(self):
+        self.delete(self.url.split("&")[0])

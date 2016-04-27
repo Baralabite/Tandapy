@@ -31,7 +31,7 @@ from Tandapy.department.department import Department
 
 
 class DepartmentList(NodeList):
-    def __init__(self, token):
-        NodeList.__init__(self, token)
+    def __init__(self):
+        NodeList.__init__(self)
         request = "departments"
         self.fetch(request=request, childClass=Department)

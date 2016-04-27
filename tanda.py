@@ -47,7 +47,6 @@ https://my.tanda.co/api/v2/documentation
 class Tanda:
     def __init__(self, token=None):
         if token:
-            print("Setting the token")
             Requester.setToken(token)
 
         self.objectCache = {}
@@ -59,7 +58,7 @@ class Tanda:
         return Roster(self.token, on=date)
 
     def getRoster(self, id):
-        return Roster(self.toke, id=id)
+        return Roster(id=id)
 
 
     def getUsers(self):
@@ -69,26 +68,26 @@ class Tanda:
         return UserList()
 
     def getDepartments(self):
-        return DepartmentList(self.token)
+        return DepartmentList()
 
 
     def getSchedule(self):
-        return ScheduleList(self.token)
+        return ScheduleList()
 
     def getRole(self):
-        return RoleList(self.token)
+        return RoleList()
 
     def getShift(self):
-        return ShiftList(self.token)
+        return ShiftList()
 
     def getLeave(self):
-        return LeaveList(self.token)
+        return LeaveList()
 
     def getAward(self):
-        return AwardList(self.token)
+        return AwardList()
 
     def getUnavailability(self, user_ids=[]):
         return UnavailabilityList(self.token, user_ids=user_ids)
 
     def getDevice(self):
-        return DeviceList(self.token)
+        return DeviceList()

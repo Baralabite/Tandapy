@@ -25,5 +25,8 @@ SOFTWARE.
 from Tandapy.util.Node import Node
 
 class Shift(Node):
-    def __init__(self, url, token=None, nodeData=None):
-        Node.__init__(self, url, token=None, nodeData=None)
+    def __init__(self, id, **kwargs):
+        Node.__init__(self, id, **kwargs)
+
+    def getResourceURL(self, id, **kwargs):
+        url = "shift"

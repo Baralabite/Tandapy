@@ -25,14 +25,8 @@ SOFTWARE.
 from Tandapy.tanda import Tanda
 from Tandapy.credentials import TOKEN
 
-tanda = Tanda()
-tanda.authenticate(TOKEN)
+roster = Tanda(TOKEN).getRoster("current").roster
 
-roster = tanda.getCurrentRoster()
-day = roster.getWeekDates()[0]
-scheduleList = roster.getScheduleOnDate(day)
-
-scheduleID = scheduleList.getIDs()[0]
-schedule = scheduleList.getEntry(scheduleID)
-
-print(dir(schedule))
+print(list(roster.keys()))
+date = roster[0]
+print(roster[date])
